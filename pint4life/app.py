@@ -1,14 +1,25 @@
-def request_donation():
-    print("Hello and Welcome to Pint4life:")
-    query_1 = input("Are you looking to donate or get a donor? Reply with Donate or get donor").lower()
-    if query_1 == "donate":
-        print("Welcome and thank you, we will redirect you to donation page")
-    elif query_1 == "get donor":
-        print("Welcome and thank you, we will direct you to request donation page")
-    else:
-        print("I dont understand your request")
+import PySimpleGUI as sg
+
+layout = [
+    [sg.Text("Request For Blood Donation")],
+    [sg.Text("Patient Name", key='-PATIENTNAME-'), sg.Input(key='-NAMEINPUT-')],
+    [sg.Text("Blood Type"), sg.Spin(['A+', 'A-', 'B+', 'B-', 'O+','O-','AB+', 'AB-'], key='-BLOODTYPE-')],
+    [sg.Text("Pints Required"), sg.Input(key='-PINTS-')],
+    [sg.Text("Hospital/Location"), sg.Input(key='-LOCATION-')],
+    [sg.Text("Contact Person"), sg.Input(key='-CONTACTPERSON-')],
+    [sg.Text("Contact Phonenumber"), sg.Input(key='-PHONENUMBER-')],
+    [sg.Button("Submit", key='-SUBMIT-')]
+]
+window = sg.Window("Pint4Life", layout)
+
+while True:
+    event, values = window.read()
+
+    if event == '-SUBMIT-':
+        print("Good Start, Project Under construction")
+
+    if event == sg.WIN_CLOSED:
+        break
 
 
-request_donation()
-def check_available_donors():
-    pass
+window.close()
