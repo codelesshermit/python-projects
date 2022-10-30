@@ -22,16 +22,17 @@ def download_video(link):
 
 def create_Window():
     pass
-sg.theme('SystemDefault1')
+
+sg.theme('GreenTan')
 layout = [
             [sg.Text('Paste the youtube Link below ', key='-TEXT-')],
             [sg.Input(key='-LINK-'), sg.Button('Preview', key='-PREVIEW-')],
             [sg.Text('', key='-TITLE-')],
             [sg.Image('', key='-THUMBNAIL-', size=(240,240), visible=False)],
-            [sg.Button('Download Audio', key='-AUDIO-', visible=False), sg.Button('Download Video', key='-VIDEO-', visible=False)]
+            [sg.Button('Download Audio', key='-AUDIO-', visible=False), sg.Button('Download Video', key='-VIDEO-', visible=False),sg.Push(), sg.Button('Close', key='-CLOSE-', visible=False)]
          ]
 
-window = sg.Window('Youtube Video/Audio Downloader', layout)
+window = sg.Window('Youtube Video/Audio Downloader', layout, resizable=True)
 
 while True:
     event, values = window.read()
@@ -50,16 +51,20 @@ while True:
         window['-THUMBNAIL-'].update('image.png')
         window['-AUDIO-'].update(visible=True)
         window['-VIDEO-'].update(visible=True)
+        window['-CLOSE-'].update(visible=True)
     
-    if event == '-AUDIO-':
+    if event == '-AUDIO-': 
         download_audio(values['-LINK-'])
         sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
-        window.refresh()
+    window.refresh()
 
     if event == '-VIDEO-':
         download_video(values['-LINK-'])
         sg.Popup("Your Video has been downloaded.\n Check Downloads\\Youtube Download ")
-        window.refresh()
+    window.refresh()
+
+    if event == '-CLOSE-':
+        window.close()
 
 
 
