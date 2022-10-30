@@ -10,13 +10,13 @@ import requests
 
 def download_audio(link):
     # download path
-    folder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads/Youtube Download')
+    folder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads/Youtube Download/Music')
     yt = YouTube(link)
     yt.streams.get_audio_only().download(output_path=folder)
 
 def download_video(link):
     #download path
-    path_to_download_folder = str(os.path.join(Path.home(), "Downloads/Youtube Download"))
+    path_to_download_folder = str(os.path.join(Path.home(), "Downloads/Youtube Download/Videos"))
     yt = YouTube(link,)
     yt.streams.get_highest_resolution().download(output_path=path_to_download_folder)
 
@@ -27,11 +27,11 @@ layout = [
             [sg.Text('Paste the youtube Link below ', key='-TEXT-')],
             [sg.Input(key='-LINK-'), sg.Button('Preview', key='-PREVIEW-')],
             [sg.Text('', key='-TITLE-')],
-            [sg.Image('', key='-THUMBNAIL-', size=(250,250), visible=False)],
+            [sg.Image('', key='-THUMBNAIL-', size=(240,240), visible=False)],
             [sg.Button('Download Audio', key='-AUDIO-', visible=False), sg.Button('Download Video', key='-VIDEO-', visible=False)]
          ]
 
-window = sg.Window('Youtube Video/Audio Downloader', layout, size=(500, 500))
+window = sg.Window('Youtube Video/Audio Downloader', layout)
 
 while True:
     event, values = window.read()
