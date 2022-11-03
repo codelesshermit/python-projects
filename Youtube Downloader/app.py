@@ -27,18 +27,33 @@ def query_search(query):
 
     for result in s.results:
         print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
+    
+main_menu = [
+                ['Paste Link',],
+                ['Search Youtube'],
+            ]
+
+link_paste_layout = [ 
+                
+                        ]
+
+search_layout = [
+                [sg.Input(key='-QUERY-'), sg.Button('Search', key='-SEARCH-')],
+                [sg.Column([[]], key='-RESULTS-')]
+                    ]
 
 def create_window():
     sg.theme('GreenTan')
     layout = [
-                [sg.Text('Paste the youtube Link below ', key='-TEXT-')],
-                #[sg.Button('Search'), sg.Button('Paste Link')],
-                [sg.Input(key='-LINK-'), sg.Button('Preview', key='-PREVIEW-')],
-                #[sg.Input(key='-QUERY-'), sg.Button('Search', key='-SEARCH-')],
-                [sg.Text('', key='-TITLE-')],
-                [sg.Image('', key='-THUMBNAIL-', size=(240,240), visible=False)],
-                [sg.Button('Download Audio', key='-AUDIO-', visible=False), sg.Button('Download Video', key='-VIDEO-', visible=False),sg.Push(), sg.Button('Close', key='-CLOSE-', visible=False)]
-            ]
+               [sg.Menu(main_menu)],
+               [sg.Text('Youtube Downloader')],
+               [sg.Text('Paste your Link below')],
+               [sg.Input(key='-LINK-'), sg.Button('Preview', key='-PREVIEW-')],
+               [sg.Text(key='-TITLE-')],
+               [sg.Image(key='-THUMBNAIL-', size=(240,240), visible=False)],
+               [sg.Button('Download Audio', key='-AUDIO-', visible=False), sg.Button('Download Video', key='-VIDEO-', visible=False), sg.Push(), sg.Button('Close', key='-CLOSE-', visible=False)],
+               [sg.Text('YouTubedownloader (YtDwn)', pad=(10,10), justification='center')],
+             ]
 
     return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, keep_on_top=True, location=(400,20)).Finalize()
 
