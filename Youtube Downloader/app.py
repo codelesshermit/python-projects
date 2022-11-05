@@ -33,7 +33,7 @@ def create_window():
     sg.theme('GreenTan')
     layout = [
                [sg.Menu(main_menu)],
-               [sg.Text('Youtube Downloader')],
+               [sg.Image('icon.png', size=(None, None))],
                [sg.Text('Enter Search Query Below', key='-STEXT-', visible=False)],
                [sg.Input(key='-QUERY-', visible=False), sg.Button('Search', key='-SEARCH-', visible=False)],
                [sg.Column([[]], key='-RESULTS-', visible=False)],
@@ -115,7 +115,7 @@ while True:
                 print(index, result)
                 img = Image.open(requests.get(result.thumbnail_url, stream=True).raw)
                 img = img.save('result_image.png')
-                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-", enable_events=True), sg.Image('result_image.png', size=(50,50))]])
+                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-", enable_events=True), sg.Image('result_image.png', size=(100,100))]])
                 print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
     
     if event == '-RESULTTEXT-':
