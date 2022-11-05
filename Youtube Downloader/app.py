@@ -21,33 +21,23 @@ def download_video(link):
     yt = YouTube(link,)
     yt.streams.get_highest_resolution().download(output_path=path_to_download_folder)
 
-def query_search(query):
-    s = Search(query)
-    print(len(s.results))
 
-    for result in s.results:
-        print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
     
 main_menu = [
-                ['Paste Link',],
-                ['Search Youtube'],
+                ['Paste Link',['Paste Link', 'Exit']],
+                ['Search Youtube', ['Search Youtube']],
             ]
 
-link_paste_layout = [ 
-                
-                        ]
-
-search_layout = [
-                [sg.Input(key='-QUERY-'), sg.Button('Search', key='-SEARCH-')],
-                [sg.Column([[]], key='-RESULTS-')]
-                    ]
 
 def create_window():
     sg.theme('GreenTan')
     layout = [
                [sg.Menu(main_menu)],
                [sg.Text('Youtube Downloader')],
-               [sg.Text('Paste your Link below')],
+               [sg.Text('Enter Search Query Below', key='-STEXT-', visible=False)],
+               [sg.Input(key='-QUERY-', visible=False), sg.Button('Search', key='-SEARCH-', visible=False)],
+               [sg.Column([[]], key='-RESULTS-', visible=False)],
+               [sg.Text('Paste your Link below', key='-PLTEXT-')],
                [sg.Input(key='-LINK-'), sg.Button('Preview', key='-PREVIEW-')],
                [sg.Text(key='-TITLE-')],
                [sg.Image(key='-THUMBNAIL-', size=(240,240), visible=False)],
@@ -64,6 +54,13 @@ while True:
 
     if event == sg.WIN_CLOSED:
         break
+
+    #paste link functionality--------------------------------------------------
+    if event == 'Paste Link':
+        pass 
+    
+    if event == 'Exit':
+        window.close()
 
     if event == '-PREVIEW-':
         if values['-LINK-'] == '':
@@ -82,28 +79,51 @@ while True:
             window['-AUDIO-'].update(visible=True)
             window['-VIDEO-'].update(visible=True)
             window['-CLOSE-'].update(visible=True)
-            
+                 
     
+    if event == '-AUDIO-': 
+        download_audio(values['-LINK-'])
+        sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
+        create_window()
+
+    if event == '-VIDEO-':
+        download_video(values['-LINK-'])
+        sg.Popup("Your Video has been downloaded.\n Check Downloads\\Youtube Download ")
+        create_window()
+
+    if event == '-CLOSE-':
+        window.close()
+
+    #search functionality
+    if event == 'Search Youtube':
+        window['-QUERY-'].update(visible=True)
+        window['-STEXT-'].update(visible=True)
+        window['-SEARCH-'].update(visible=True)
+        window['-RESULTS-'].update(visible=True)
+        window['-PLTEXT-'].update(visible=False)
+        window['-LINK-'].update(visible=False)
+        window['-PREVIEW-'].update(visible=False)
+
+    def query_search(query):
+        s = Search(query)
+        print(len(s.results))
+       
+
+        for index, result in enumerate(s.results):
+            top_searches = 7
+            while index < top_searches:
+                print(index, result)
+                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-")]])
+                print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
+                index += 1
+
+
     if event == '-SEARCH-':
         if values['-QUERY-'] == '':
             sg.Popup("Enter a search Query, the link can't be empty")
             create_window()
         else:
             query_search(values['-QUERY-'])
-        
-    
-    if event == '-AUDIO-': 
-        download_audio(values['-LINK-'])
-        sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
-    window.refresh()
-
-    if event == '-VIDEO-':
-        download_video(values['-LINK-'])
-        sg.Popup("Your Video has been downloaded.\n Check Downloads\\Youtube Download ")
-    window.refresh()
-
-    if event == '-CLOSE-':
-        window.close()
 
 
 
