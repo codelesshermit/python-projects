@@ -45,7 +45,7 @@ def create_window():
                [sg.Text('YouTubedownloader (YtDwn)', pad=(10,10), justification='center')],
              ]
 
-    return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, keep_on_top=True, location=(400,20)).Finalize()
+    return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, location=(400,20)).Finalize()
 
 window = create_window()
 
@@ -111,11 +111,16 @@ while True:
 
         for index, result in enumerate(s.results):
             top_searches = 7
-            while index < top_searches:
+            if index < top_searches:
                 print(index, result)
-                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-")]])
+                img = Image.open(requests.get(result.thumbnail_url, stream=True).raw)
+                img = img.save('result_image.png')
+                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-", enable_events=True), sg.Image('result_image.png', size=(50,50))]])
                 print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
-                index += 1
+    
+    if event == '-RESULTTEXT-':
+        sg.Popup('Adding Download Capabilities soon')
+                
 
 
     if event == '-SEARCH-':
