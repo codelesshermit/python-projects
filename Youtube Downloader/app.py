@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from PIL import Image
 import requests
+import webbrowser
 
 
 
@@ -34,7 +35,7 @@ def create_window():
     layout = [
                [sg.Menu(main_menu)],
                [sg.Image('icon.png', size=(None, None))],
-               [sg.Text('Enter Search Query Below', key='-STEXT-', visible=False)],
+               [sg.Text('Enter Search Query Below\n(T functionality is under development and only returns search results for now)', key='-STEXT-', visible=False)],
                [sg.Input(key='-QUERY-', visible=False), sg.Button('Search', key='-SEARCH-', visible=False)],
                [sg.Column([[]], key='-RESULTS-', visible=False)],
                [sg.Text('Paste your Link below', key='-PLTEXT-')],
@@ -45,7 +46,7 @@ def create_window():
                [sg.Text('YouTubedownloader (YtDwn)', pad=(10,10), justification='center')],
              ]
 
-    return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, location=(400,20)).Finalize()
+    return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, icon='icon.png', location=(400,20)).Finalize()
 
 window = create_window()
 
@@ -57,7 +58,7 @@ while True:
 
     #paste link functionality--------------------------------------------------
     if event == 'Paste Link':
-        pass 
+        create_window() 
     
     if event == 'Exit':
         window.close()
@@ -80,16 +81,17 @@ while True:
             window['-VIDEO-'].update(visible=True)
             window['-CLOSE-'].update(visible=True)
                  
-    
     if event == '-AUDIO-': 
         download_audio(values['-LINK-'])
         sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
-        create_window()
+        webbrowser.open('codelesshermit.github.io')
+        window.Refresh()
 
     if event == '-VIDEO-':
         download_video(values['-LINK-'])
         sg.Popup("Your Video has been downloaded.\n Check Downloads\\Youtube Download ")
-        create_window()
+        webbrowser.open('codelesshermit.github.io')
+        window.Refresh()
 
     if event == '-CLOSE-':
         window.close()
@@ -106,17 +108,18 @@ while True:
 
     def query_search(query):
         s = Search(query)
-        print(len(s.results))
+        #print(len(s.results))
        
 
         for index, result in enumerate(s.results):
-            top_searches = 7
+            top_searches = 10
             if index < top_searches:
-                print(index, result)
+                #Sprint(index, result)
                 img = Image.open(requests.get(result.thumbnail_url, stream=True).raw)
                 img = img.save('result_image.png')
-                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-", enable_events=True), sg.Image('result_image.png', size=(100,100))]])
-                print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
+                window.extend_layout(window['-RESULTS-'], [[sg.Text(result.title, key="-RESULTTEXT-", enable_events=True)]])
+                #sg.Image('result_image.png', size=(50,50))
+                #print(f'{result.title} and the url {result.watch_url} and thumbnail path{result.thumbnail_url}')
     
     if event == '-RESULTTEXT-':
         sg.Popup('Adding Download Capabilities soon')
