@@ -46,7 +46,7 @@ def create_window():
                [sg.Text('YouTubedownloader (YtDwn)', pad=(10,10), justification='center')],
              ]
 
-    return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, icon='icon.png', location=(400,20)).Finalize()
+    return sg.Window('Youtube Video/Audio Downloader', layout, resizable=True, icon='icon.ico', location=(400,20)).Finalize()
 
 window = create_window()
 
@@ -84,13 +84,13 @@ while True:
     if event == '-AUDIO-': 
         download_audio(values['-LINK-'])
         sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
-        webbrowser.open('codelesshermit.github.io')
+        webbrowser.open('http://codelesshermit.github.io', new=0, autoraise=True)
         window.Refresh()
 
     if event == '-VIDEO-':
         download_video(values['-LINK-'])
         sg.Popup("Your Video has been downloaded.\n Check Downloads\\Youtube Download ")
-        webbrowser.open('codelesshermit.github.io')
+        webbrowser.open('https://codelesshermit.github.io', new=0, autoraise=True)
         window.Refresh()
 
     if event == '-CLOSE-':
