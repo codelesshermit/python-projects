@@ -84,13 +84,13 @@ while True:
     if event == '-AUDIO-': 
         download_audio(values['-LINK-'])
         sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
-        webbrowser.open('http://codelesshermit.github.io', new=0, autoraise=True)
+        #webbrowser.open('http://codelesshermit.github.io', new=0, autoraise=True)
         window.Refresh()
 
     if event == '-VIDEO-':
         download_video(values['-LINK-'])
         sg.Popup("Your Video has been downloaded.\n Check Downloads\\Youtube Download ")
-        webbrowser.open('https://codelesshermit.github.io', new=0, autoraise=True)
+        #webbrowser.open('https://codelesshermit.github.io', new=0, autoraise=True)
         window.Refresh()
 
     if event == '-CLOSE-':
