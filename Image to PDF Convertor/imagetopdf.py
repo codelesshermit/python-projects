@@ -20,6 +20,11 @@ def convert_to_pdf(images, pdf_title):
     fpdf.output(save_as, 'F')
     sg.popup('PDF Generated ' + save_as + '\n You can Pick new Images and create another PDF')
 
+def clear_input():
+    for key in values:
+        window['-IMAGES-'].update('')
+        window['-PDFTITLE-'].update('')
+
 
 layout = [
             [sg.Text('Image to PDF Convertor')],
@@ -30,10 +35,6 @@ layout = [
 
 window = sg.Window('Image To PDF', layout)
 
-def clear_input():
-    for key in values:
-        window['-IMAGES-'].update('')
-        window['-PDFTITLE-'].update('')
 
 while True:
     event, values = window.read()
