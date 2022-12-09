@@ -50,6 +50,10 @@ def create_window():
 
 window = create_window()
 
+def refresh():
+    window.close()
+    create_window()
+
 while True:
     event, values = window.read()
 
@@ -85,7 +89,7 @@ while True:
         download_audio(values['-LINK-'])
         sg.Popup("Your Audio has been downloaded.\n Check Downloads\\Youtube Download ")
         #webbrowser.open('http://codelesshermit.github.io', new=0, autoraise=True)
-        window.Refresh()
+        refresh()
 
     if event == '-VIDEO-':
         download_video(values['-LINK-'])
