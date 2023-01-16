@@ -18,7 +18,7 @@ def clear_input():
 
 layout = [
             [sg.Text('Image Compressor')],
-            [sg.Text('Image to Upload', size=(14,1)), sg.Input(key='-IMAGE-'), sg.FilesBrowse()],
+            [sg.Text('Image to Compress', size=(14,1)), sg.Input(key='-IMAGE-'), sg.FilesBrowse()],
             [sg.Text('New Image Name:', size=(14,1)), sg.Input(key='-FILENAME-')],
             [sg.Button('Compress', key='-COMPRESS-'), sg.Button('Close', key='-EXIT-')],
          ]
