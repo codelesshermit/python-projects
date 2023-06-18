@@ -74,8 +74,8 @@ while True:
             
         else:
             yt = YouTube(values['-LINK-'])
-            print(yt.title)
-            window['-TITLE-'].update(yt.title)
+            #print(yt.title)
+            #window['-TITLE-'].update(yt.title)
             im = Image.open(requests.get(yt.thumbnail_url, stream=True).raw)
             im = im.save('image.png')
             #sg.Image('image.png', size=(300,300))
